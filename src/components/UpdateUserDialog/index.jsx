@@ -46,20 +46,13 @@ const UpdateUserDialog = ({ open, closeDialog, classes, user, updateUser }) => {
           type,
           sex,
           birthdate
+        }).then(() => {
+          resetForm({})
+          setSubmitting(false)
         })
-
-        setSubmitting(false)
       }}
     >
-      {({
-        values,
-        errors,
-        touched,
-        handleChange,
-        handleBlur,
-        handleSubmit,
-        isSubmitting
-      }) => (
+      {({ values, errors, handleChange, handleSubmit, isSubmitting }) => (
         <Dialog
           open={open}
           onClose={closeDialog}
@@ -130,7 +123,7 @@ const UpdateUserDialog = ({ open, closeDialog, classes, user, updateUser }) => {
                 onClick={closeDialog}
                 color='primary'
               >
-                Add User
+                Update User
               </Button>
             </DialogActions>
           </Form>
