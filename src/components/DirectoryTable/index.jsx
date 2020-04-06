@@ -15,6 +15,8 @@ import UpdateUserDialog from '../UpdateUserDialog'
 import { withStyles } from '@material-ui/core/styles'
 import styles from './styles'
 
+import capitalizeFirstLetter from '../../utils/capitalizeFirstLetter'
+
 const DirectoryTable = ({ classes, users, deleteUser, updateUser }) => {
   const [hover, setHover] = useState(null)
   const [dialogOpen, setDialogOpen] = useState(false)
@@ -46,8 +48,12 @@ const DirectoryTable = ({ classes, users, deleteUser, updateUser }) => {
                 <TableCell component='th' scope='row'>
                   {user.name}
                 </TableCell>
-                <TableCell align='left'>{user.type}</TableCell>
-                <TableCell align='center'>{user.sex}</TableCell>
+                <TableCell align='left'>
+                  {capitalizeFirstLetter(user.type)}
+                </TableCell>
+                <TableCell align='center'>
+                  {capitalizeFirstLetter(user.sex)}
+                </TableCell>
                 <TableCell align='center'>{user.email}</TableCell>
                 <TableCell align='right'>{user.birthdate}</TableCell>
                 <TableCell align='right'>
