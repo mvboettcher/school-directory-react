@@ -8,6 +8,10 @@ import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle'
+import InputLabel from '@material-ui/core/InputLabel'
+import MenuItem from '@material-ui/core/MenuItem'
+import FormControl from '@material-ui/core/FormControl'
+import Select from '@material-ui/core/Select'
 
 import { withStyles } from '@material-ui/core/styles'
 import styles from './styles'
@@ -21,7 +25,7 @@ const LoginSchema = Yup.object().shape({
   birthdate: Yup.string().required('Required')
 })
 
-const UpdateUserDialog = ({ open, closeDialog, classes, user }) => {
+const UpdateUserDialog = ({ open, closeDialog, classes, user, updateUser }) => {
   return (
     <Formik
       initialValues={{
@@ -34,18 +38,17 @@ const UpdateUserDialog = ({ open, closeDialog, classes, user }) => {
       }}
       validationSchema={LoginSchema}
       onSubmit={(values, { setSubmitting, resetForm }) => {
-        console.log({ values })
         const { firstName, lastName, email, type, sex, birthdate } = values
-        // updateUser(user._id, {
-        //   name: firstName + ' ' + lastName,
-        //   email,
-        //   type,
-        //   sex,
-        //   birthdate
-        // })
+
+        updateUser(user._id, {
+          name: firstName + ' ' + lastName,
+          email,
+          type,
+          sex,
+          birthdate
+        })
 
         setSubmitting(false)
-        resetForm({})
       }}
     >
       {({
@@ -93,22 +96,21 @@ const UpdateUserDialog = ({ open, closeDialog, classes, user }) => {
                 value={values.email}
                 onChange={handleChange('email')}
               />
-              <TextField
-                margin='normal'
-                fullWidth
-                label='Type'
-                name='type'
-                value={values.type}
-                onChange={handleChange('type')}
-              />
-              <TextField
-                margin='normal'
-                fullWidth
-                label='Sex'
-                name='sex'
-                value={values.sex}
-                onChange={handleChange('sex')}
-              />
+              <FormControl className={classes.sexFormControl}>
+                <InputLabel>Sex</InputLabel>
+                <Select value={values.sex} onChange={handleChange('sex')}>
+                  <MenuItem value='male'>Male</MenuItem>
+                  <MenuItem value='female'>Female</MenuItem>
+                </Select>
+              </FormControl>
+              <FormControl className={classes.typeFormControl}>
+                <InputLabel>Type</InputLabel>
+                <Select value={values.type} onChange={handleChange('type')}>
+                  <MenuItem value='student'>Student</MenuItem>
+                  <MenuItem value='teacher'>Teacher</MenuItem>
+                  <MenuItem value='administration'>Administration</MenuItem>
+                </Select>
+              </FormControl>
               <TextField
                 margin='normal'
                 fullWidth

@@ -8,6 +8,10 @@ import Dialog from '@material-ui/core/Dialog'
 import DialogActions from '@material-ui/core/DialogActions'
 import DialogContent from '@material-ui/core/DialogContent'
 import DialogTitle from '@material-ui/core/DialogTitle'
+import InputLabel from '@material-ui/core/InputLabel'
+import MenuItem from '@material-ui/core/MenuItem'
+import FormControl from '@material-ui/core/FormControl'
+import Select from '@material-ui/core/Select'
 
 import { withStyles } from '@material-ui/core/styles'
 import styles from './styles'
@@ -36,8 +40,8 @@ const AddUserDialog = ({ open, toggleDialog, classes, addUser }) => {
       }}
       validationSchema={LoginSchema}
       onSubmit={(values, { setSubmitting, resetForm }) => {
-        console.log({ values })
         const { firstName, lastName, email, type, sex, birthdate } = values
+
         addUser({
           name: firstName + ' ' + lastName,
           email,
@@ -95,27 +99,27 @@ const AddUserDialog = ({ open, toggleDialog, classes, addUser }) => {
                 value={values.email}
                 onChange={handleChange('email')}
               />
-              <TextField
-                margin='normal'
-                fullWidth
-                label='Type'
-                name='type'
-                value={values.type}
-                onChange={handleChange('type')}
-              />
-              <TextField
-                margin='normal'
-                fullWidth
-                label='Sex'
-                name='sex'
-                value={values.sex}
-                onChange={handleChange('sex')}
-              />
+              <FormControl className={classes.sexFormControl}>
+                <InputLabel>Sex</InputLabel>
+                <Select value={values.sex} onChange={handleChange('sex')}>
+                  <MenuItem value='male'>Male</MenuItem>
+                  <MenuItem value='female'>Female</MenuItem>
+                </Select>
+              </FormControl>
+              <FormControl className={classes.typeFormControl}>
+                <InputLabel>Type</InputLabel>
+                <Select value={values.type} onChange={handleChange('type')}>
+                  <MenuItem value='student'>Student</MenuItem>
+                  <MenuItem value='teacher'>Teacher</MenuItem>
+                  <MenuItem value='administration'>Administration</MenuItem>
+                </Select>
+              </FormControl>
               <TextField
                 margin='normal'
                 fullWidth
                 label='Date of Birth'
                 name='birthdate'
+                placeholder='mm/dd/yyyy'
                 value={values.birthdate}
                 onChange={handleChange('birthdate')}
               />

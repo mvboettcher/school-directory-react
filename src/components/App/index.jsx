@@ -1,14 +1,17 @@
 import React, { Component } from 'react'
 
 import CircularProgress from '@material-ui/core/CircularProgress'
-import SearchField from './components/SearchField'
-import DirectoryTable from './components/DirectoryTable'
-import AddUserDialog from './components/AddUserDialog'
-import AddUserButton from './components/AddUserButton'
+import SearchField from '../SearchField'
+import DirectoryTable from '../DirectoryTable'
+import AddUserDialog from '../AddUserDialog'
+import AddUserButton from '../AddUserButton'
 
-import API from './API'
+import { withStyles } from '@material-ui/core/styles'
+import styles from './styles'
 
-import sortByName from './utils/sortByName'
+import API from '../../API'
+
+import sortByName from '../../utils/sortByName'
 
 class App extends Component {
   state = {
@@ -48,6 +51,15 @@ class App extends Component {
       .catch((err) => console.log(err))
   }
 
+  // UPDATE USER
+  updateUser = (id, data) => {
+    this.setState({ isLoading: true })
+
+    API.put(`/${id}`, data)
+      .then((res) => this.getUsers())
+      .catch((err) => console.log(err))
+  }
+
   // HANDLE SEARCH BY NAME
   handleSearch = (e) => {
     this.setState({ searchField: e.target.value })
@@ -64,19 +76,26 @@ class App extends Component {
 
   render() {
     const { isLoading, users, searchField, addUserDialogOpen } = this.state
+    const { classes } = this.props
 
     const searchedUsers = users.filter((user) =>
       user.name.toLowerCase().includes(searchField.toLowerCase())
     )
 
     return (
-      <div>
-        <h2>SCHOOL DIRECTORY</h2>
-        <SearchField handleSearch={this.handleSearch} />
+      <div className={classes.appContainer}>
+        <div className={classes.header}>
+          <h2>SCHOOL DIRECTORY</h2>
+          <SearchField handleSearch={this.handleSearch} />
+        </div>
         {isLoading ? (
           <CircularProgress />
         ) : (
-          <DirectoryTable users={searchedUsers} deleteUser={this.deleteUser} />
+          <DirectoryTable
+            users={searchedUsers}
+            deleteUser={this.deleteUser}
+            updateUser={this.updateUser}
+          />
         )}
         <AddUserDialog
           open={addUserDialogOpen}
@@ -89,4 +108,4 @@ class App extends Component {
   }
 }
 
-export default App
+export default withStyles(styles)(App)

@@ -15,35 +15,12 @@ import UpdateUserDialog from '../UpdateUserDialog'
 import { withStyles } from '@material-ui/core/styles'
 import styles from './styles'
 
-const EditDeleteButtons = ({ classes, deleteUser, user }) => {
+const DirectoryTable = ({ classes, users, deleteUser, updateUser }) => {
+  const [hover, setHover] = useState(null)
   const [dialogOpen, setDialogOpen] = useState(false)
 
   const openDialog = () => setDialogOpen(true)
   const closeDialog = () => setDialogOpen(false)
-
-  return (
-    <div className={classes.editDeleteContainer}>
-      <Edit
-        fontSize='small'
-        className={classes.editDeleteButton}
-        onClick={openDialog}
-      />
-      <RemoveCircle
-        fontSize='small'
-        className={classes.editDeleteButton}
-        onClick={() => deleteUser(user._id)}
-      />
-      <UpdateUserDialog
-        open={dialogOpen}
-        closeDialog={closeDialog}
-        user={user}
-      />
-    </div>
-  )
-}
-
-const DirectoryTable = ({ classes, users, deleteUser, updateUser }) => {
-  const [hover, setHover] = useState(null)
 
   return (
     <div>
@@ -75,12 +52,24 @@ const DirectoryTable = ({ classes, users, deleteUser, updateUser }) => {
                 <TableCell align='right'>{user.birthdate}</TableCell>
                 <TableCell align='right'>
                   {hover === idx ? (
-                    <EditDeleteButtons
-                      classes={classes}
-                      user={user}
-                      deleteUser={deleteUser}
-                      updateUser={updateUser}
-                    />
+                    <div className={classes.editDeleteContainer}>
+                      <Edit
+                        fontSize='small'
+                        className={classes.editDeleteButton}
+                        onClick={openDialog}
+                      />
+                      <RemoveCircle
+                        fontSize='small'
+                        className={classes.editDeleteButton}
+                        onClick={() => deleteUser(user._id)}
+                      />
+                      <UpdateUserDialog
+                        open={dialogOpen}
+                        closeDialog={closeDialog}
+                        user={user}
+                        updateUser={updateUser}
+                      />
+                    </div>
                   ) : (
                     <div style={{ width: 40 }} />
                   )}
