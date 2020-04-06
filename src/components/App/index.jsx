@@ -5,6 +5,7 @@ import SearchField from '../SearchField'
 import DirectoryTable from '../DirectoryTable'
 import AddUserDialog from '../AddUserDialog'
 import AddUserButton from '../AddUserButton'
+import TypeFilterSelect from '../TypeFilterSelect'
 
 import { withStyles } from '@material-ui/core/styles'
 import styles from './styles'
@@ -18,7 +19,8 @@ class App extends Component {
     isLoading: true,
     users: [],
     searchField: '',
-    addUserDialogOpen: false
+    addUserDialogOpen: false,
+    typeFilter: 'All'
   }
 
   // GET USERS
@@ -70,23 +72,44 @@ class App extends Component {
     this.setState({ addUserDialogOpen: bool })
   }
 
+  // HANDLE FILTER BY TYPE
+  handleTypeFilter = (event) => {
+    this.setState({ typeFilter: event.target.value })
+  }
+
   componentDidMount() {
     this.getUsers()
   }
 
   render() {
-    const { isLoading, users, searchField, addUserDialogOpen } = this.state
+    const {
+      isLoading,
+      users,
+      searchField,
+      addUserDialogOpen,
+      typeFilter
+    } = this.state
     const { classes } = this.props
 
-    const searchedUsers = users.filter((user) =>
+    let searchedUsers = users.filter((user) =>
       user.name.toLowerCase().includes(searchField.toLowerCase())
     )
+
+    if (typeFilter !== 'All') {
+      searchedUsers = searchedUsers.filter((user) => user.type === typeFilter)
+    }
 
     return (
       <div className={classes.appContainer}>
         <div className={classes.header}>
           <h2>SCHOOL DIRECTORY</h2>
-          <SearchField handleSearch={this.handleSearch} />
+          <div className={classes.searchFilter}>
+            <SearchField handleSearch={this.handleSearch} />
+            <TypeFilterSelect
+              handleChange={this.handleTypeFilter}
+              typeFilter={typeFilter}
+            />
+          </div>
         </div>
         {isLoading ? (
           <CircularProgress />

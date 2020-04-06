@@ -7,6 +7,12 @@ const styles = (theme) => ({
     display: 'flex',
     flexDirection: 'column',
     alignItems: 'center'
+  },
+  searchFilter: {
+    display: 'flex',
+    justifyContent: 'space-evenly',
+    paddingTop: 20,
+    paddingBottom: 20
   }
 })
 
