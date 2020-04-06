@@ -3,30 +3,43 @@ import React, { Component } from 'react'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import SearchField from './components/SearchField'
 import DirectoryTable from './components/DirectoryTable'
+import AddUserDialog from './components/AddUserDialog'
 import AddUserButton from './components/AddUserButton'
 
-import sortByName from './utils/sortByName'
-
 import API from './API'
+
+import sortByName from './utils/sortByName'
 
 class App extends Component {
   state = {
     isLoading: true,
     users: [],
-    searchField: ''
+    searchField: '',
+    addUserDialogOpen: false
   }
 
-  getUsers = async () => {
-    let userData = await API.get('/')
-    userData = userData.data.data
+  // GET USERS
+  getUsers = () => {
+    API.get('/').then((res) => {
+      const userData = res.data.data
 
-    console.log(userData)
-    this.setState({
-      isLoading: false,
-      users: sortByName(userData)
+      this.setState({
+        isLoading: false,
+        users: sortByName(userData)
+      })
     })
   }
 
+  // ADD USER
+  addUser = (data) => {
+    this.setState({ isLoading: true })
+
+    API.post('/', data)
+      .then((res) => this.getUsers())
+      .catch((err) => console.log(err))
+  }
+
+  // DELETE USER
   deleteUser = (id) => {
     this.setState({ isLoading: true })
 
@@ -35,8 +48,14 @@ class App extends Component {
       .catch((err) => console.log(err))
   }
 
+  // HANDLE SEARCH BY NAME
   handleSearch = (e) => {
     this.setState({ searchField: e.target.value })
+  }
+
+  // TOGGLE ADD USER DIALOG
+  toggleAddUserDialog = (bool) => {
+    this.setState({ addUserDialogOpen: bool })
   }
 
   componentDidMount() {
@@ -44,7 +63,7 @@ class App extends Component {
   }
 
   render() {
-    const { isLoading, users, searchField } = this.state
+    const { isLoading, users, searchField, addUserDialogOpen } = this.state
 
     const searchedUsers = users.filter((user) =>
       user.name.toLowerCase().includes(searchField.toLowerCase())
@@ -59,7 +78,12 @@ class App extends Component {
         ) : (
           <DirectoryTable users={searchedUsers} deleteUser={this.deleteUser} />
         )}
-        <AddUserButton />
+        <AddUserDialog
+          open={addUserDialogOpen}
+          toggleDialog={this.toggleAddUserDialog}
+          addUser={this.addUser}
+        />
+        <AddUserButton toggleDialog={this.toggleAddUserDialog} />
       </div>
     )
   }

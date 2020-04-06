@@ -5,9 +5,10 @@ import AddIcon from '@material-ui/icons/Add'
 import { withStyles } from '@material-ui/core/styles'
 import styles from './styles'
 
-const AddUserButton = ({ classes }) => {
+const AddUserButton = ({ classes, toggleDialog }) => {
+  const openDialog = () => toggleDialog(true)
   return (
-    <Fab className={classes.fab} color='primary'>
+    <Fab className={classes.fab} color='primary' onClick={openDialog}>
       <AddIcon />
     </Fab>
   )
