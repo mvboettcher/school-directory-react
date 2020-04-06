@@ -7,21 +7,26 @@ import TableContainer from '@material-ui/core/TableContainer'
 import TableHead from '@material-ui/core/TableHead'
 import TableRow from '@material-ui/core/TableRow'
 import Paper from '@material-ui/core/Paper'
-import MenuButton from '../MenuButton'
+import IconButton from '@material-ui/core/IconButton'
+
 import RemoveCircle from '@material-ui/icons/RemoveCircle'
 import Edit from '@material-ui/icons/Edit'
 
 import { withStyles } from '@material-ui/core/styles'
 import styles from './styles'
 
-const EditDeleteButtons = ({ classes }) => (
-  <div className={classes.editDeleteButtons}>
-    <Edit fontSize='small' />
-    <RemoveCircle fontSize='small' />
+const EditDeleteButtons = ({ classes, deleteUser, id }) => (
+  <div className={classes.editDeleteContainer}>
+    <Edit fontSize='small' className={classes.editDeleteButton} />
+    <RemoveCircle
+      fontSize='small'
+      className={classes.editDeleteButton}
+      onClick={() => deleteUser(id)}
+    />
   </div>
 )
 
-const DirectoryTable = ({ classes, users }) => {
+const DirectoryTable = ({ classes, users, deleteUser }) => {
   const [hover, setHover] = useState(null)
 
   return (
@@ -30,7 +35,7 @@ const DirectoryTable = ({ classes, users }) => {
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
-            <TableCell align='left'>{<MenuButton title='Type' />}</TableCell>
+            <TableCell align='left'>Type</TableCell>
             <TableCell align='center'>Sex</TableCell>
             <TableCell align='center'>Email</TableCell>
             <TableCell align='right'>Birthdate</TableCell>
@@ -53,7 +58,11 @@ const DirectoryTable = ({ classes, users }) => {
               <TableCell align='right'>{user.birthdate}</TableCell>
               <TableCell align='right'>
                 {hover === idx ? (
-                  <EditDeleteButtons classes={classes} />
+                  <EditDeleteButtons
+                    id={user._id}
+                    classes={classes}
+                    deleteUser={deleteUser}
+                  />
                 ) : (
                   <div style={{ width: 40 }} />
                 )}

@@ -2,10 +2,16 @@ const styles = (theme) => ({
   table: {
     minWidth: 650
   },
-  editDeleteButtons: {
+  editDeleteContainer: {
     display: 'flex',
-    justifyContent: 'space-evenly',
-    opacity: 0.7
+    justifyContent: 'space-evenly'
+  },
+  editDeleteButton: {
+    opacity: 0.7,
+    cursor: 'pointer'
+  },
+  progress: {
+    marginTop: 20
   }
 })
 

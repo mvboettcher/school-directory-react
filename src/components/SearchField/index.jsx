@@ -1,18 +1,12 @@
 import React from 'react'
-import { makeStyles } from '@material-ui/core/styles'
+import { withStyles } from '@material-ui/core/styles'
 import InputAdornment from '@material-ui/core/InputAdornment'
 import TextField from '@material-ui/core/TextField'
 import Search from '@material-ui/icons/Search'
 
-const useStyles = makeStyles((theme) => ({
-  margin: {
-    margin: theme.spacing(1),
-  },
-}))
+import styles from './styles'
 
-export default function SearchField() {
-  const classes = useStyles()
-
+const SearchField = ({ classes, handleSearch }) => {
   return (
     <div>
       <TextField
@@ -25,9 +19,12 @@ export default function SearchField() {
             <InputAdornment position='start'>
               <Search />
             </InputAdornment>
-          ),
+          )
         }}
+        onChange={handleSearch}
       />
     </div>
   )
 }
+
+export default withStyles(styles)(SearchField)
