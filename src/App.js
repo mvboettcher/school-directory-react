@@ -5,6 +5,8 @@ import SearchField from './components/SearchField'
 import DirectoryTable from './components/DirectoryTable'
 import AddUserButton from './components/AddUserButton'
 
+import sortByName from './utils/sortByName'
+
 import API from './API'
 
 class App extends Component {
@@ -21,7 +23,7 @@ class App extends Component {
     console.log(userData)
     this.setState({
       isLoading: false,
-      users: userData
+      users: sortByName(userData)
     })
   }
 
