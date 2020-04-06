@@ -48,21 +48,15 @@ const AddUserDialog = ({ open, toggleDialog, classes, addUser }) => {
           type,
           sex,
           birthdate
+        }).then((res) => {
+          closeDialog()
+          resetForm({})
         })
 
         setSubmitting(false)
-        resetForm({})
       }}
     >
-      {({
-        values,
-        errors,
-        touched,
-        handleChange,
-        handleBlur,
-        handleSubmit,
-        isSubmitting
-      }) => (
+      {({ values, handleChange, handleSubmit }) => (
         <Dialog
           open={open}
           onClose={closeDialog}
@@ -71,7 +65,7 @@ const AddUserDialog = ({ open, toggleDialog, classes, addUser }) => {
           <DialogTitle id='form-dialog-title'>Add New User</DialogTitle>
           <Form onSubmit={handleSubmit} classes={classes.form}>
             <DialogContent>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+              <div className={classes.nameContainer}>
                 <TextField
                   style={{ width: '45%' }}
                   margin='normal'
@@ -88,7 +82,6 @@ const AddUserDialog = ({ open, toggleDialog, classes, addUser }) => {
                   name='lastName'
                   value={values.lastName}
                   onChange={handleChange('lastName')}
-                  autoFocus
                 />
               </div>
               <TextField
@@ -128,12 +121,7 @@ const AddUserDialog = ({ open, toggleDialog, classes, addUser }) => {
               <Button onClick={closeDialog} color='primary'>
                 Cancel
               </Button>
-              <Button
-                type='submit'
-                variant='contained'
-                onClick={closeDialog}
-                color='primary'
-              >
+              <Button type='submit' variant='contained' color='primary'>
                 Add User
               </Button>
             </DialogActions>

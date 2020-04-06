@@ -15,6 +15,10 @@ const styles = (theme) => ({
   },
   selectEmpty: {
     marginTop: theme.spacing(2)
+  },
+  nameContainer: {
+    display: 'flex',
+    justifyContent: 'space-between'
   }
 })
 

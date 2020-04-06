@@ -48,87 +48,87 @@ const UpdateUserDialog = ({ open, closeDialog, classes, user, updateUser }) => {
           birthdate
         }).then(() => {
           resetForm({})
-          setSubmitting(false)
+          closeDialog()
         })
+        setSubmitting(false)
       }}
     >
-      {({ values, errors, handleChange, handleSubmit, isSubmitting }) => (
-        <Dialog
-          open={open}
-          onClose={closeDialog}
-          aria-labelledby='form-dialog-title'
-        >
-          <DialogTitle id='form-dialog-title'>Update User</DialogTitle>
-          <Form onSubmit={handleSubmit} classes={classes.form}>
-            <DialogContent>
-              <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+      {({ values, handleChange, handleSubmit }) => {
+        return (
+          <Dialog
+            open={open}
+            onClose={closeDialog}
+            aria-labelledby='form-dialog-title'
+          >
+            <DialogTitle id='form-dialog-title'>Update User</DialogTitle>
+            <Form onSubmit={handleSubmit} classes={classes.form}>
+              <DialogContent>
+                <div
+                  style={{ display: 'flex', justifyContent: 'space-between' }}
+                >
+                  <TextField
+                    style={{ width: '45%' }}
+                    margin='normal'
+                    label='First Name'
+                    name='firstName'
+                    value={values.firstName}
+                    onChange={handleChange('firstName')}
+                    autoFocus
+                  />
+                  <TextField
+                    style={{ width: '45%' }}
+                    margin='normal'
+                    label='Last Name'
+                    name='lastName'
+                    value={values.lastName}
+                    onChange={handleChange('lastName')}
+                    autoFocus
+                  />
+                </div>
                 <TextField
-                  style={{ width: '45%' }}
                   margin='normal'
-                  label='First Name'
-                  name='firstName'
-                  value={values.firstName}
-                  onChange={handleChange('firstName')}
-                  autoFocus
+                  fullWidth
+                  label='Email'
+                  name='email'
+                  value={values.email}
+                  onChange={handleChange('email')}
                 />
+                <FormControl className={classes.sexFormControl}>
+                  <InputLabel>Sex</InputLabel>
+                  <Select value={values.sex} onChange={handleChange('sex')}>
+                    <MenuItem value='male'>Male</MenuItem>
+                    <MenuItem value='female'>Female</MenuItem>
+                  </Select>
+                </FormControl>
+                <FormControl className={classes.typeFormControl}>
+                  <InputLabel>Type</InputLabel>
+                  <Select value={values.type} onChange={handleChange('type')}>
+                    <MenuItem value='student'>Student</MenuItem>
+                    <MenuItem value='teacher'>Teacher</MenuItem>
+                    <MenuItem value='administration'>Administration</MenuItem>
+                  </Select>
+                </FormControl>
                 <TextField
-                  style={{ width: '45%' }}
                   margin='normal'
-                  label='Last Name'
-                  name='lastName'
-                  value={values.lastName}
-                  onChange={handleChange('lastName')}
-                  autoFocus
+                  fullWidth
+                  label='Date of Birth'
+                  name='birthdate'
+                  value={values.birthdate}
+                  onChange={handleChange('birthdate')}
                 />
-              </div>
-              <TextField
-                margin='normal'
-                fullWidth
-                label='Email'
-                name='email'
-                value={values.email}
-                onChange={handleChange('email')}
-              />
-              <FormControl className={classes.sexFormControl}>
-                <InputLabel>Sex</InputLabel>
-                <Select value={values.sex} onChange={handleChange('sex')}>
-                  <MenuItem value='male'>Male</MenuItem>
-                  <MenuItem value='female'>Female</MenuItem>
-                </Select>
-              </FormControl>
-              <FormControl className={classes.typeFormControl}>
-                <InputLabel>Type</InputLabel>
-                <Select value={values.type} onChange={handleChange('type')}>
-                  <MenuItem value='student'>Student</MenuItem>
-                  <MenuItem value='teacher'>Teacher</MenuItem>
-                  <MenuItem value='administration'>Administration</MenuItem>
-                </Select>
-              </FormControl>
-              <TextField
-                margin='normal'
-                fullWidth
-                label='Date of Birth'
-                name='birthdate'
-                value={values.birthdate}
-                onChange={handleChange('birthdate')}
-              />
-            </DialogContent>
-            <DialogActions>
-              <Button onClick={closeDialog} color='primary'>
-                Cancel
-              </Button>
-              <Button
-                type='submit'
-                variant='contained'
-                onClick={closeDialog}
-                color='primary'
-              >
-                Update User
-              </Button>
-            </DialogActions>
-          </Form>
-        </Dialog>
-      )}
+              </DialogContent>
+              <DialogActions>
+                <Button onClick={closeDialog} color='primary'>
+                  Cancel
+                </Button>
+                <Button type='submit' variant='contained' color='primary'>
+                  Update User
+                </Button>
+              </DialogActions>
+            </Form>
+          </Dialog>
+        )
+      }}
     </Formik>
   )
 }

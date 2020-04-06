@@ -67,14 +67,14 @@ class App extends Component {
     this.setState({ searchField: e.target.value })
   }
 
-  // TOGGLE ADD USER DIALOG
-  toggleAddUserDialog = (bool) => {
-    this.setState({ addUserDialogOpen: bool })
-  }
-
   // HANDLE FILTER BY TYPE
   handleTypeFilter = (event) => {
     this.setState({ typeFilter: event.target.value })
+  }
+
+  // TOGGLE ADD USER DIALOG
+  toggleAddUserDialog = (bool) => {
+    this.setState({ addUserDialogOpen: bool })
   }
 
   componentDidMount() {
