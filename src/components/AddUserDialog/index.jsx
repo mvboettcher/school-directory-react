@@ -55,7 +55,7 @@ const AddUserDialog = ({ open, toggleDialog, classes, addUser }) => {
         resetForm({})
       }}
     >
-      {({ values, handleChange, handleSubmit }) => (
+      {({ values, handleChange, handleSubmit, errors }) => (
         <Dialog
           open={open}
           onClose={closeDialog}
@@ -70,6 +70,7 @@ const AddUserDialog = ({ open, toggleDialog, classes, addUser }) => {
                   margin='normal'
                   label='First Name'
                   name='firstName'
+                  error={errors.firstName}
                   value={values.firstName}
                   onChange={handleChange('firstName')}
                   autoFocus
@@ -79,6 +80,7 @@ const AddUserDialog = ({ open, toggleDialog, classes, addUser }) => {
                   margin='normal'
                   label='Last Name'
                   name='lastName'
+                  error={errors.lastName}
                   value={values.lastName}
                   onChange={handleChange('lastName')}
                 />
@@ -88,17 +90,24 @@ const AddUserDialog = ({ open, toggleDialog, classes, addUser }) => {
                 fullWidth
                 label='Email'
                 name='email'
+                error={errors.email}
                 value={values.email}
                 onChange={handleChange('email')}
               />
-              <FormControl className={classes.sexFormControl}>
+              <FormControl
+                className={classes.sexFormControl}
+                error={errors.sex}
+              >
                 <InputLabel>Sex</InputLabel>
                 <Select value={values.sex} onChange={handleChange('sex')}>
                   <MenuItem value='male'>Male</MenuItem>
                   <MenuItem value='female'>Female</MenuItem>
                 </Select>
               </FormControl>
-              <FormControl className={classes.typeFormControl}>
+              <FormControl
+                className={classes.typeFormControl}
+                error={errors.type}
+              >
                 <InputLabel>Type</InputLabel>
                 <Select value={values.type} onChange={handleChange('type')}>
                   <MenuItem value='student'>Student</MenuItem>
@@ -112,6 +121,7 @@ const AddUserDialog = ({ open, toggleDialog, classes, addUser }) => {
                 label='Date of Birth'
                 name='birthdate'
                 placeholder='mm/dd/yyyy'
+                error={errors.birthdate}
                 value={values.birthdate}
                 onChange={handleChange('birthdate')}
               />

@@ -53,7 +53,7 @@ const UpdateUserDialog = ({ open, closeDialog, classes, user, updateUser }) => {
         setSubmitting(false)
       }}
     >
-      {({ values, handleChange, handleSubmit }) => {
+      {({ values, handleChange, handleSubmit, errors }) => {
         return (
           <Dialog
             open={open}
@@ -71,6 +71,7 @@ const UpdateUserDialog = ({ open, closeDialog, classes, user, updateUser }) => {
                     margin='normal'
                     label='First Name'
                     name='firstName'
+                    error={errors.firstName}
                     value={values.firstName}
                     onChange={handleChange('firstName')}
                     autoFocus
@@ -80,6 +81,7 @@ const UpdateUserDialog = ({ open, closeDialog, classes, user, updateUser }) => {
                     margin='normal'
                     label='Last Name'
                     name='lastName'
+                    error={errors.lastName}
                     value={values.lastName}
                     onChange={handleChange('lastName')}
                     autoFocus
@@ -90,17 +92,24 @@ const UpdateUserDialog = ({ open, closeDialog, classes, user, updateUser }) => {
                   fullWidth
                   label='Email'
                   name='email'
+                  error={errors.email}
                   value={values.email}
                   onChange={handleChange('email')}
                 />
-                <FormControl className={classes.sexFormControl}>
+                <FormControl
+                  className={classes.sexFormControl}
+                  error={errors.sex}
+                >
                   <InputLabel>Sex</InputLabel>
                   <Select value={values.sex} onChange={handleChange('sex')}>
                     <MenuItem value='male'>Male</MenuItem>
                     <MenuItem value='female'>Female</MenuItem>
                   </Select>
                 </FormControl>
-                <FormControl className={classes.typeFormControl}>
+                <FormControl
+                  className={classes.typeFormControl}
+                  error={errors.type}
+                >
                   <InputLabel>Type</InputLabel>
                   <Select value={values.type} onChange={handleChange('type')}>
                     <MenuItem value='student'>Student</MenuItem>
@@ -113,6 +122,7 @@ const UpdateUserDialog = ({ open, closeDialog, classes, user, updateUser }) => {
                   fullWidth
                   label='Date of Birth'
                   name='birthdate'
+                  error={errors.birthdate}
                   value={values.birthdate}
                   onChange={handleChange('birthdate')}
                 />
