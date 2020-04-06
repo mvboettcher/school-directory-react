@@ -47,8 +47,8 @@ const UpdateUserDialog = ({ open, closeDialog, classes, user, updateUser }) => {
           sex,
           birthdate
         }).then(() => {
-          resetForm({})
           closeDialog()
+          resetForm({})
         })
         setSubmitting(false)
       }}

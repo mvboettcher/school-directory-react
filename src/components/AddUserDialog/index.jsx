@@ -48,12 +48,11 @@ const AddUserDialog = ({ open, toggleDialog, classes, addUser }) => {
           type,
           sex,
           birthdate
-        }).then((res) => {
-          closeDialog()
-          resetForm({})
         })
 
         setSubmitting(false)
+        closeDialog()
+        resetForm({})
       }}
     >
       {({ values, handleChange, handleSubmit }) => (
